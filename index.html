@@ -6,7 +6,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Open+Sans:ital,wght@1,600&display=swap" rel="stylesheet">
 
   <style>
     html, body {
@@ -42,9 +42,9 @@
     /* 📝 FRASE (posición fija dentro del video) */
     .contenedor-frase {
       position: absolute;
-      top: 100px;
-      left: 87px;
-      width: 440px;
+      top: 140px;
+      left: 60px;
+      width: 800px;
       height: 50px;
       display: flex;
       align-items: center;
@@ -54,33 +54,29 @@
     }
 
     #frase {
-      font-size: 28px;
-      color: white;
-      font-family: "Archivo", sans-serif;
-      font-weight: 500;
-	  font-optical-sizing: auto;
-	  font-style: normal;
-      letter-spacing: 2px;
-      text-align: center;
-	font-variation-settings: "wdth" 100
+  font-size: 35px;
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 2px;
+  text-align: center;
     }
 
     /* 🔢 CONTADOR */
     .contador {
-      position: absolute;
-      bottom: 42px;
-      left: 296px;
-      width: 64%;
-      text-align: center;
-      font-size: 25px;
-      font-family: "Anton", sans-serif;
-      font-weight: 400;
-      color: #2231dc;
-	  font-style: normal;
-      letter-spacing: 3px;
-	  line-height: 1;
-      text-shadow: 0 0 10px rgba(0,0,0,0);
-      z-index: 1;
+  position: absolute;
+  bottom: 55px;
+  left: 165px;
+  width: 64%;
+  text-align: center;
+  font-size: 60px;
+  font-family: "Dela Gothic One", sans-serif;
+  font-weight: 400;
+  color: #012BFF;
+  line-height: 1;
+  z-index: 2;
+
     }
   </style>
 </head>
@@ -99,74 +95,87 @@
     <!-- ⏳ Contador -->
     <div class="contador" id="contador"></div>
   </div>
+<script>
 
-  <script>
-    const frases = [
-      "Prometiste dormir más… pero sigues viendo “cómo doblar sábanas” a las 2:57 a.m.",
-      "Prometiste comer mejor… pero el buñuelo te guiñó el ojo otra vez.",
-      "Prometiste hacer más ejercicio… pero tu membresía del gym te extraña más que tu ex.",
-      "Prometiste ahorrar más… pero dices “me lo merezco” muy seguido.",
-      "Prometiste bajar 10 kilos… pero diciembre no coopera.",
-      "Prometiste ser más organizado… pero escondiste todo en una bolsa y ya.",
-      "Prometiste limpiar más… pero tu cerebro dijo: “primero un descansito” y se fue por 3 horas.",
-      "Prometiste cuidar más tu corazón… pero revisaste el perfil de tu ex otra vez.",
-	  "Prometiste que aprenderías inglés… pero sigues diciendo “guatsá.",
-	  "Prometiste viajar más… y el único viaje que haces es a Portal Norte"
+/* =========================
+   FRASES (YA FUNCIONA)
+========================= */
 
-    ];
+const frases = [
+  "Para: Cantar goles con extraños",
+          "Para: No lavar la camiseta",
+          "Para: Sufrir juntos cada partido",
+          "Para: Vivir 90 min eternos",
+          "Para: Gritarle a la pantalla",
+          "Para: Celebrar como nunca",
+          "Para: Sentirse técnico"
+];
 
-    let index = Math.floor(Math.random() * frases.length);
-    const elemento = document.getElementById("frase");
+let index = 0;
+const elemento = document.getElementById("frase");
 
-    function cambiarFrase() {
-      elemento.textContent = frases[index];
-      index = (index + 1) % frases.length;
-    }
+function cambiarFrase() {
+  elemento.textContent = frases[index];
+  index = (index + 1) % frases.length;
+}
 
-    cambiarFrase();
-    setInterval(cambiarFrase, 10000);
+cambiarFrase();
+setInterval(cambiarFrase, 5000);
 
-    /* 🕒 Cuenta regresiva */
-    const contador = document.getElementById("contador");
-    const fechaFin = new Date("December 31, 2025 23:59:59").getTime();
 
-    function actualizarContador() {
-      const ahora = new Date().getTime();
-      const diferencia = fechaFin - ahora;
 
-      if (diferencia <= 0) {
-        contador.textContent = "¡Feliz Año Nuevo! 🎉";
-        return;
-      }
+/* =========================
+   ✅ CUENTA REGRESIVA ESTABLE
+========================= */
 
-      const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+const contador = document.getElementById("contador");
 
-      contador.innerHTML = `${dias}<br>días`;
-    }
+/*
+Año, Mes (0-11), Día
+Junio = 5
+*/
+const fechaMundial = new Date(2026, 5, 11).getTime();
 
-    actualizarContador();
-    setInterval(actualizarContador, 1000);
+function actualizarContador() {
 
-    /* 🔍 Escalar todo el contenedor (video + texto juntos) */
-    function escalarPantalla() {
-      const escalaX = window.innerWidth / 897;
-      const escalaY = window.innerHeight / 192;
-      const escala = Math.min(escalaX, escalaY);
-      document.getElementById("contenedor").style.transform = `scale(${escala})`;
-    }
+  const ahora = new Date().getTime();
+  const diferencia = fechaMundial - ahora;
 
-    window.addEventListener("resize", escalarPantalla);
-    escalarPantalla();
-  </script>
+  if (diferencia <= 0) {
+    contador.innerHTML = "HOY INICIA EL MUNDIAL";
+    return;
+  }
+
+  const dias = Math.ceil(
+    diferencia / (1000 * 60 * 60 * 24)
+  );
+
+  contador.innerHTML = dias +  "&nbsp;DÍAS";
+}
+
+actualizarContador();
+setInterval(actualizarContador, 60000);
+
+
+
+/* =========================
+   ESCALADO (NO TOCAR)
+========================= */
+
+function escalarPantalla() {
+  const escalaX = window.innerWidth / 897;
+  const escalaY = window.innerHeight / 192;
+  const escala = Math.min(escalaX, escalaY);
+
+  document.getElementById("contenedor")
+    .style.transform = `scale(${escala})`;
+}
+
+window.addEventListener("resize", escalarPantalla);
+escalarPantalla();
+
+</script>
 </body>
 </html>
-
-
-
-
-
 
 
